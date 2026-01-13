@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-advanced-function",
+  "version": "1.0.0",
+  "description": "Advanced Node.js function for Vajra platform",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
