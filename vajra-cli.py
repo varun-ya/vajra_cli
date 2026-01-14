@@ -124,9 +124,9 @@ class VajraCLI:
                 print("  Logging out current user...")
                 self.logout()
         
-        print("  Secure OAuth Authentication")
-        print("  This will open your browser for Google authentication.")
-        print()
+        print("  Secure OAuth Authentication", flush=True)
+        print("  This will open your browser for Google authentication.", flush=True)
+        print(flush=True)
         
         return self.oauth_auth()
         
@@ -206,12 +206,13 @@ class VajraCLI:
     
     def oauth_auth(self):
         """OAuth browser-based authentication"""
-        print("\n  Secure OAuth Authentication:")
-        print("  This will open your browser for Google authentication.")
-        print()
+        print("\n  Secure OAuth Authentication:", flush=True)
+        print("  This will open your browser for Google authentication.", flush=True)
+        print(flush=True)
         try:
             # Get OAuth URL from server
-            response = requests.get(f"{self.api_base}/auth/oauth/url")
+            print("  Contacting auth server...", end="\r", flush=True)
+            response = requests.get(f"{self.api_base}/auth/oauth/url", timeout=10)
             if response.status_code != 200:
                 self.print_status('error', f"Failed to get OAuth URL: {response.text}")
                 self.print_end_section()
@@ -237,7 +238,8 @@ class VajraCLI:
                             
                             try:
                                 callback_response = requests.get(
-                                    f"{api_base}/auth/oauth/callback?code={code}&state={callback_state}"
+                                    f"{api_base}/auth/oauth/callback?code={code}&state={callback_state}",
+                                    timeout=30
                                 )
                                 
                                 if callback_response.status_code == 200:
